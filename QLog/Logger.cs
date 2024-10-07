@@ -18,7 +18,10 @@ public static class Logger
         logStream = File.Create(settings.filePath);
         Info("Started logging", typeof(Logger));
     }
-
+    public static void Info<T>(string message) => Info(message, typeof(T));
+    public static void Warn<T>(string message) => Warn(message, typeof(T));
+    public static void Error<T>(Exception message) => Error(message, typeof(T));
+    
     public static void Info(string message, Type? sender = null)
     {
         var write = Log.Build(message, sender);
@@ -71,7 +74,7 @@ file static class Log
     
     public static string Build(string message, Type? @object = null)
     {
-        return $"[{DateTime.Now:HH:mm:ss} | QLog/INF |  {{@object ?? typeof(Nullable)}}] {message}\n";
+        return $"[{DateTime.Now:HH:mm:ss} | QLog/INF |  {@object ?? typeof(Nullable)}] {message}\n";
     }
     
     public static string Build(Exception message, Type? @object = null)
